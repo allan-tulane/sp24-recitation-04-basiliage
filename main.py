@@ -26,6 +26,14 @@ def run_map_reduce(map_f, reduce_f, docs):
     return [reduce_f(g) for g in groups]
 
 def word_count_map(doc):
+
+  list_of_words = doc.split()
+  ret_list = []
+
+  for word in list_of_words:
+      ret_list.append((word, 1))
+  return ret_list
+
     """
     Params:
       doc....a string to be split into tokens. split on whitespace.
@@ -42,6 +50,9 @@ def word_count_map(doc):
 
 
 def word_count_reduce(group):
+  token = group[0]
+  list_of_ones = group[1]
+  return (token, reduce(plus, 1, list_of_ones))
     """
     Params:
       group...a tuple of the form (token, list_of_ones), indicating the number of times each word appears.
@@ -54,7 +65,7 @@ def word_count_reduce(group):
     NOTE: you should use call the `reduce` function here.
     """
     ###TODO
-    
+
     
 
 
@@ -111,6 +122,18 @@ def reduce(f, id_, a):
 def sentiment_map(doc,
                   pos_terms=set(['good', 'great', 'awesome', 'sockdolager']),
                   neg_terms=set(['bad', 'terrible', 'waste', 'carbuncle', 'corrupted'])):
+  ret_list = []
+
+  for word in doc.split():
+    if word in pos_terms:
+      ret_list.append(("positive", 1))
+    elif word in neg_terms:
+      ret_list.append(("negative", 1))
+
+
+
+  #print(ret_list)
+  return ret_list
     """
     Params:
       doc.........a string to be split into tokens. split on whitespace.
